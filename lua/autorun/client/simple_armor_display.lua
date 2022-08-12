@@ -45,6 +45,4 @@ hook.Add( "HUDPaint", "SimpleArmorDisplay", function()
 	draw.SimpleText( statsText, statsFont, statsX + 1, statsY + 1, color1 )
 	draw.SimpleText( statsText, statsFont, statsX + 2, statsY + 2, color2 )
 	draw.SimpleText( statsText, statsFont, statsX, statsY, team.GetColor( visEnt:Team() ) )
-
-	end
 end )
