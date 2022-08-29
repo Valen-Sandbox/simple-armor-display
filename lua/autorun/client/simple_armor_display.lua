@@ -12,7 +12,7 @@ hook.Add( "HUDPaint", "SimpleArmorDisplay", function()
 
 	if not visEnt:IsValid() then return end
 	if not visEnt:IsPlayer() then return end
-	if not visEnt:Alive() then return end
+	if visEnt:Health() <= 0 then return end
 	if visEnt:GetRenderMode() == RENDERMODE_TRANSALPHA then return end
 
 	local nameText = visEnt:Nick()
@@ -22,7 +22,7 @@ hook.Add( "HUDPaint", "SimpleArmorDisplay", function()
 
 	local mouseX, mouseY = gui.MousePos()
 
-	if ( mouseX == 0 && mouseY == 0 ) then
+	if mouseX == 0 and mouseY == 0 then
 		mouseX = ScrW() / 2
 		mouseY = ScrH() / 2
 	end
@@ -35,7 +35,6 @@ hook.Add( "HUDPaint", "SimpleArmorDisplay", function()
 	draw.SimpleText( nameText, nameFont, nameX, nameY, team.GetColor( visEnt:Team() ) )
 
 	local statsY = nameY + nameH + 5
-
 	local statsText = visEnt:Health() .. "%   " .. visEnt:Armor() .. "%"
 
 	surface.SetFont( statsFont )
