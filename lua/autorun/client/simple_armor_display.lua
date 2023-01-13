@@ -23,7 +23,7 @@ hook.Add( "HUDPaint", "SimpleArmorDisplay", function()
 	surface.SetFont( nameFont )
 	local nameW, nameH = surface.GetTextSize( nameText )
 
-	local mouseX, mouseY = input.GetCursorPos()
+	local mouseX, mouseY = gui.MousePos()
 
 	if mouseX == 0 and mouseY == 0 then
 		mouseX = ScrW() / 2
