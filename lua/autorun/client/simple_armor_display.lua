@@ -1,3 +1,12 @@
+local Color = Color
+local hook_Add = hook.Add
+local LocalPlayer = LocalPlayer
+local surface_SetFont = CLIENT and surface.SetFont
+local surface_GetTextSize = CLIENT and surface.GetTextSize
+local gui_MousePos = CLIENT and gui.MousePos
+local ScrW = ScrW
+local ScrH = ScrH
+local team_GetColor = team.GetColor
 local IsValid = IsValid
 local draw_SimpleText = draw.SimpleText
 
@@ -6,11 +15,11 @@ local statsFont = "TargetIDSmall"
 local color1 = Color( 0, 0, 0, 120 )
 local color2 = Color( 0, 0, 0, 50 )
 
-hook.Add( "HUDDrawTargetID", "SimpleArmorDisplay", function()
+hook_Add( "HUDDrawTargetID", "SimpleArmorDisplay", function()
 	return false
 end )
 
-hook.Add( "HUDPaint", "SimpleArmorDisplay", function()
+hook_Add( "HUDPaint", "SimpleArmorDisplay", function()
 	local visEnt = LocalPlayer():GetEyeTrace().Entity
 
 	if not IsValid( visEnt ) then return end
@@ -20,10 +29,10 @@ hook.Add( "HUDPaint", "SimpleArmorDisplay", function()
 
 	local nameText = visEnt:Nick()
 
-	surface.SetFont( nameFont )
-	local nameW, nameH = surface.GetTextSize( nameText )
+	surface_SetFont( nameFont )
+	local nameW, nameH = surface_GetTextSize( nameText )
 
-	local mouseX, mouseY = gui.MousePos()
+	local mouseX, mouseY = gui_MousePos()
 
 	if mouseX == 0 and mouseY == 0 then
 		mouseX = ScrW() / 2
@@ -35,16 +44,16 @@ hook.Add( "HUDPaint", "SimpleArmorDisplay", function()
 
 	draw_SimpleText( nameText, nameFont, nameX + 1, nameY + 1, color1 )
 	draw_SimpleText( nameText, nameFont, nameX + 2, nameY + 2, color2 )
-	draw_SimpleText( nameText, nameFont, nameX, nameY, team.GetColor( visEnt:Team() ) )
+	draw_SimpleText( nameText, nameFont, nameX, nameY, team_GetColor( visEnt:Team() ) )
 
 	local statsY = nameY + nameH + 5
 	local statsText = visEnt:Health() .. "%   " .. visEnt:Armor() .. "%"
 
-	surface.SetFont( statsFont )
-	local statsW = surface.GetTextSize( statsText )
+	surface_SetFont( statsFont )
+	local statsW = surface_GetTextSize( statsText )
 	local statsX = mouseX - statsW / 2
 
 	draw_SimpleText( statsText, statsFont, statsX + 1, statsY + 1, color1 )
 	draw_SimpleText( statsText, statsFont, statsX + 2, statsY + 2, color2 )
-	draw_SimpleText( statsText, statsFont, statsX, statsY, team.GetColor( visEnt:Team() ) )
+	draw_SimpleText( statsText, statsFont, statsX, statsY, team_GetColor( visEnt:Team() ) )
 end )
